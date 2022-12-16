@@ -64,7 +64,7 @@ start
         }
     }
 
-    if (settings["greeeceLevel"])
+    if (settings["greeceLevel"])
     {
         if(current.SceneName == vars.greece && old.SceneName != current.SceneName)
         {
