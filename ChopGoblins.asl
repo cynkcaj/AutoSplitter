@@ -9,16 +9,27 @@ startup
     Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Unity");
     vars.Helper.GameName = "Chop Goblins";
     vars.Helper.LoadSceneManager = true;
-    
-    vars.loadingScene = "LoadingScene";
-    vars.museum = "Museum";
-    vars.mainMenu = "MainMenu";
-    vars.endGameScene = "EndGameScene";
+    settings.Add("museumLevel", true, "Start on Museum");
+    settings.Add("streetsLevel", false, "Start on Streets");
+    settings.Add("draculaLevel", false, "Start on Dracula's Castle");
+    settings.Add("greeceLevel", false, "Start on Greece");
+    settings.Add("futureLevel", false, "Start on The Future");
 }
 
 init
 {
-  vars.Helper.TryLoad = (Func<dynamic, bool>)(mono => true);
+  vars.Helper.TryLoad = (Func<dynamic, bool>)(mono =>
+  {
+      vars.loadingScene = "LoadingScene";
+      vars.endGameScene= "EndGameScene";
+      vars.mainMenu = "MainMenu";
+      vars.museum = "Museum";
+      vars.streets = "Streets";
+      vars.dracula = "DraculaCastle";
+      vars.greece = "Greece";
+      vars.future = "Future";
+      return true;
+  });
 }
 
 update
@@ -26,10 +37,33 @@ update
     current.SceneName = vars.Helper.Scenes.Active.Name; 
 }
 
-
 start
 {
-    return current.SceneName == vars.museum && old.SceneName != current.SceneName;
+    // not sure how to do this in a cleaner fashion, sorry!
+    if (settings["museumLevel"])
+    {
+        return current.SceneName == vars.museum && old.SceneName != current.SceneName;
+    }
+
+    if (settings["streetsLevel"])
+    {
+        return current.SceneName == vars.streets && old.SceneName != current.SceneName;
+    }
+
+    if (settings["draculaLevel"])
+    {
+        return current.SceneName == vars.dracula && old.SceneName != current.SceneName;
+    }
+
+    if (settings["greeceLevel"])
+    {
+        return current.SceneName == vars.greece && old.SceneName != current.SceneName;
+    }
+    
+    if (settings["futureLevel"])
+    {
+        return current.SceneName == vars.future && old.SceneName != current.SceneName;
+    }
 }
 
 split
