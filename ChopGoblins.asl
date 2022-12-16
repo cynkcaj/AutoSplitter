@@ -31,32 +31,36 @@ update
 
 start
 {
-    if(current.SceneName == vars.museum && old.SceneName != current.SceneName){
+    if(current.SceneName == vars.museum && old.SceneName != current.SceneName)
+    {
         return true;
     }
 }
 
 split
 {
-    if(current.SceneName == vars.loadingScene && current.SceneName != old.SceneName || current.SceneName == vars.endGameScene && current.SceneName != old.SceneName){
+    if(current.SceneName == vars.loadingScene && current.SceneName != old.SceneName || current.SceneName == vars.endGameScene && current.SceneName != old.SceneName)
+    {
         return true;
     }
 }
 
 reset
 {
-    if(current.SceneName == vars.mainMenu && old.SceneName != vars.endGameScene){
+    if(current.SceneName == vars.mainMenu && old.SceneName != vars.endGameScene)
+    {
         return true;
     }
 }
 
 isLoading
 {
-    if(current.SceneName == vars.loadingScene){
+    if(current.SceneName == vars.loadingScene)
+    {
         return true;
     }
-
-    if(current.SceneName != vars.loadingScene){
+    else
+    {
         return false;
     }
 }
