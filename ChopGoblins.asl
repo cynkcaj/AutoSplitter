@@ -64,9 +64,3 @@ isLoading
         return false;
     }
 }
-
-exit
-{
-    vars.Helper.Timer.Reset();
-}
-
