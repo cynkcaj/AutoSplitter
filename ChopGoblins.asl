@@ -18,7 +18,7 @@ init
     vars.loadingScene = "LoadingScene";
     vars.museum = "Museum";
     vars.mainMenu = "MainMenu";
-    vars.endGameScene= "EndGameScene";
+    vars.endGameScene = "EndGameScene";
     return true;
   });
 }
