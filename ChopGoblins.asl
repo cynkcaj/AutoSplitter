@@ -26,7 +26,6 @@ init
 update
 {
     current.SceneName = vars.Helper.Scenes.Active.Name; 
-    vars.Log(current.SceneName);
 }
 
 
