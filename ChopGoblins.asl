@@ -9,6 +9,11 @@ startup
     Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Unity");
     vars.Helper.GameName = "Chop Goblins";
     vars.Helper.LoadSceneManager = true;
+    settings.Add("museumLevel", true, "Museum");
+    settings.Add("streetsLevel", true, "Streets");
+    settings.Add("draculaLevel", true, "Dracula's Castle");
+    settings.Add("greeceLevel", true, "Greece");
+    settings.Add("futureLevel", true, "The Future");
 }
 
 init
@@ -16,9 +21,13 @@ init
   vars.Helper.TryLoad = (Func<dynamic, bool>)(mono =>
   {
     vars.loadingScene = "LoadingScene";
-    vars.museum = "Museum";
+    vars.endGameScene= "EndGameScene";
     vars.mainMenu = "MainMenu";
-    vars.endGameScene = "EndGameScene";
+    vars.museum = "Museum";
+    vars.streets = "Streets";
+    vars.dracula = "DraculaCastle";
+    vars.greece = "Greece";
+    vars.future = "Future";
     return true;
   });
 }
@@ -31,9 +40,44 @@ update
 
 start
 {
-    if(current.SceneName == vars.museum && old.SceneName != current.SceneName)
+    if (settings["museumLevel"])
     {
-        return true;
+        if(current.SceneName == vars.museum && old.SceneName != current.SceneName)
+        {
+            return true;
+        }
+    }
+
+    if (settings["streetsLevel"])
+    {
+        if(current.SceneName == vars.streets && old.SceneName != current.SceneName)
+        {
+            return true;
+        }
+    }
+
+    if (settings["draculaLevel"])
+    {
+        if(current.SceneName == vars.dracula && old.SceneName != current.SceneName)
+        {
+            return true;
+        }
+    }
+
+    if (settings["greeeceLevel"])
+    {
+        if(current.SceneName == vars.greece && old.SceneName != current.SceneName)
+        {
+            return true;
+        }
+    }
+
+    if (settings["futureLevel"])
+    {
+        if(current.SceneName == vars.future && old.SceneName != current.SceneName)
+        {
+            return true;
+        }
     }
 }
 
