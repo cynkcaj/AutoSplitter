@@ -9,18 +9,16 @@ startup
     Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Unity");
     vars.Helper.GameName = "Chop Goblins";
     vars.Helper.LoadSceneManager = true;
-}
-
-init
-{
-  vars.Helper.TryLoad = (Func<dynamic, bool>)(mono =>
-  {
+    
     vars.loadingScene = "LoadingScene";
     vars.museum = "Museum";
     vars.mainMenu = "MainMenu";
     vars.endGameScene = "EndGameScene";
-    return true;
-  });
+}
+
+init
+{
+  vars.Helper.TryLoad = (Func<dynamic, bool>)(mono => true);
 }
 
 update
@@ -31,38 +29,22 @@ update
 
 start
 {
-    if(current.SceneName == vars.museum && old.SceneName != current.SceneName)
-    {
-        return true;
-    }
+    return current.SceneName == vars.museum && old.SceneName != current.SceneName;
 }
 
 split
 {
-    if(current.SceneName == vars.loadingScene && current.SceneName != old.SceneName || current.SceneName == vars.endGameScene && current.SceneName != old.SceneName)
-    {
-        return true;
-    }
+    return current.SceneName != old.SceneName && (current.SceneName == vars.loadingScene || current.SceneName == vars.endGameScene);
 }
 
 reset
 {
-    if(current.SceneName == vars.mainMenu && old.SceneName != vars.endGameScene)
-    {
-        return true;
-    }
+    return current.SceneName == vars.mainMenu && old.SceneName != vars.endGameScene;
 }
 
 isLoading
 {
-    if(current.SceneName == vars.loadingScene)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return current.SceneName == vars.loadingScene;
 }
 
 exit
