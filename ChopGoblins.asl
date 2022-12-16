@@ -64,3 +64,13 @@ isLoading
         return false;
     }
 }
+
+exit
+{
+    vars.Helper.Dispose();
+}
+
+shutdown
+{
+    vars.Helper.Dispose();
+}
