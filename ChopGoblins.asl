@@ -9,84 +9,39 @@ startup
     Assembly.Load(File.ReadAllBytes("Components/asl-help")).CreateInstance("Unity");
     vars.Helper.GameName = "Chop Goblins";
     vars.Helper.LoadSceneManager = true;
-    settings.Add("museumLevel", true, "Start on Museum");
-    settings.Add("streetsLevel", false, "Start on Streets");
-    settings.Add("draculaLevel", false, "Start on Dracula's Castle");
-    settings.Add("greeceLevel", false, "Start on Greece");
-    settings.Add("futureLevel", false, "Start on The Future");
-}
 
-init
-{
-  vars.Helper.TryLoad = (Func<dynamic, bool>)(mono =>
-  {
-      vars.loadingScene = "LoadingScene";
-      vars.endGameScene= "EndGameScene";
-      vars.mainMenu = "MainMenu";
-      vars.museum = "Museum";
-      vars.streets = "Streets";
-      vars.dracula = "DraculaCastle";
-      vars.greece = "Greece";
-      vars.future = "Future";
-      return true;
-  });
+    settings.Add("MuseumLevel", true, "Start on Museum");
+    settings.Add("StreetsLevel", false, "Start on Streets");
+    settings.Add("DraculaCastleLevel", false, "Start on Dracula's Castle");
+    settings.Add("GreeceLevel", false, "Start on Greece");
+    settings.Add("FutureLevel", false, "Start on The Future");
+
+    vars.loadingScene = "LoadingScene";
+    vars.endGameScene= "EndGameScene";
+    vars.mainMenu = "MainMenu";
 }
 
 update
 {
-    current.SceneName = vars.Helper.Scenes.Active.Name; 
+    current.SceneName = vars.Helper.Scenes.Active.Name;
 }
 
 start
 {
-    // not sure how to do this in a cleaner fashion, sorry!
-    if (settings["museumLevel"])
-    {
-        return current.SceneName == vars.museum && old.SceneName != current.SceneName;
-    }
-
-    if (settings["streetsLevel"])
-    {
-        return current.SceneName == vars.streets && old.SceneName != current.SceneName;
-    }
-
-    if (settings["draculaLevel"])
-    {
-        return current.SceneName == vars.dracula && old.SceneName != current.SceneName;
-    }
-
-    if (settings["greeceLevel"])
-    {
-        return current.SceneName == vars.greece && old.SceneName != current.SceneName;
-    }
-    
-    if (settings["futureLevel"])
-    {
-        return current.SceneName == vars.future && old.SceneName != current.SceneName;
-    }
+    return old.SceneName != current.SceneName && settings[current.SceneName + "Level"];
 }
 
 split
 {
-    return current.SceneName != old.SceneName && (current.SceneName == vars.loadingScene || current.SceneName == vars.endGameScene);
+    return old.SceneName != current.SceneName && (current.SceneName == vars.loadingScene || current.SceneName == vars.endGameScene);
 }
 
 reset
 {
-    return current.SceneName == vars.mainMenu && old.SceneName != vars.endGameScene;
+    return old.SceneName != vars.endGameScene && current.SceneName == vars.mainMenu;
 }
 
 isLoading
 {
     return current.SceneName == vars.loadingScene;
-}
-
-exit
-{
-    vars.Helper.Dispose();
-}
-
-shutdown
-{
-    vars.Helper.Dispose();
 }
