@@ -10,14 +10,24 @@ startup
     vars.Helper.GameName = "Chop Goblins";
     vars.Helper.LoadSceneManager = true;
 
-    settings.Add("MuseumLevel", true, "Start on Museum");
-    settings.Add("StreetsLevel", false, "Start on Streets");
-    settings.Add("DraculaCastleLevel", false, "Start on Dracula's Castle");
-    settings.Add("GreeceLevel", false, "Start on Greece");
-    settings.Add("FutureLevel", false, "Start on The Future");
+    settings.Add("MainLevels", true, "Main Levels");
+
+    settings.Add("Museum", true, "Start on Museum", "MainLevels");
+    settings.Add("Streets", false, "Start on Streets", "MainLevels");
+    settings.Add("DraculaCastle", false, "Start on Dracula's Castle", "MainLevels");
+    settings.Add("Greece", false, "Start on Greece", "MainLevels");
+    settings.Add("Future", false, "Start on The Future", "MainLevels");
+
+    settings.Add("RemixLevels", false, "Remix Levels");
+
+    settings.Add("REMIX_Greece", false, "Start on Greece (Remix)", "RemixLevels");
+    settings.Add("REMIX_Streets", false, "Start on Streets Remix", "RemixLevels");
+    settings.Add("REMIX_Future", false, "Start on The Future (Remix)", "RemixLevels");
+    settings.Add("REMIX_DraculaCastle", false, "Start on Dracula's Castle (Remix)", "RemixLevels");
+    settings.Add("REMIX_Museum", false, "Start on Museum (Remix)", "RemixLevels");
 
     vars.loadingScene = "LoadingScene";
-    vars.endGameScene= "EndGameScene";
+    vars.endGameScene = "EndGameScene";
     vars.mainMenu = "MainMenu";
 }
 
@@ -28,7 +38,7 @@ update
 
 start
 {
-    return old.SceneName != current.SceneName && settings[current.SceneName + "Level"];
+    return old.SceneName != current.SceneName && settings[current.SceneName];
 }
 
 split
@@ -43,5 +53,5 @@ reset
 
 isLoading
 {
-    return current.SceneName == vars.loadingScene;
+    return current.SceneName == vars.loadingScene || current.SceneName == vars.endGameScene;
 }
