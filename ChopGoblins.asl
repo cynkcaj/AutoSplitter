@@ -1,4 +1,4 @@
-/*  created by cyn#1234
+/*  created by cynkcaj
     additional credits: ero, jujstme
     uses asl-help https://github.com/just-ero/asl-help/  */
 
